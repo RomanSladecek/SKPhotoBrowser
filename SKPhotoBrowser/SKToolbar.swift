@@ -44,7 +44,7 @@ class SKToolbar: UIToolbar {
         guard let browser = browser else { return }
         
         if browser.numberOfPhotos > 1 {
-            toolCounterLabel.text = "\(currentPageIndex + 1) / \(browser.numberOfPhotos)"
+            toolCounterLabel.text = "\(currentPageIndex + 1) / \(browser.photoAtIndex(currentPageIndex).caption!)"
         } else {
             toolCounterLabel.text = nil
         }
@@ -56,7 +56,7 @@ class SKToolbar: UIToolbar {
 
 private extension SKToolbar {
     func setupApperance() {
-        backgroundColor = .clear
+        backgroundColor = .yellow
         clipsToBounds = true
         isTranslucent = true
         setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)

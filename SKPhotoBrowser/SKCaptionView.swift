@@ -71,16 +71,16 @@ private extension SKCaptionView {
     func setup() {
         isOpaque = false
         autoresizingMask = [.flexibleWidth, .flexibleTopMargin, .flexibleRightMargin, .flexibleLeftMargin]
-        
+        backgroundColor = .blue
         // setup photoLabel
         setupPhotoLabel()
     }
     
     func setupPhotoLabel() {
-        photoLabel = UILabel(frame: CGRect(x: photoLabelPadding, y: 0, width: bounds.size.width - (photoLabelPadding * 2), height: bounds.size.height))
+        photoLabel = UILabel(frame: CGRect(x: photoLabelPadding, y: 0, width: bounds.size.width - (photoLabelPadding * 2)-100, height: bounds.size.height))
         photoLabel.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         photoLabel.isOpaque = false
-        photoLabel.backgroundColor = .clear
+        photoLabel.backgroundColor = .red
         photoLabel.textColor = SKCaptionOptions.textColor
         photoLabel.textAlignment = SKCaptionOptions.textAlignment
         photoLabel.lineBreakMode = SKCaptionOptions.lineBreakMode
