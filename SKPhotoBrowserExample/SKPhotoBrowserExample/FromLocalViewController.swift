@@ -20,7 +20,8 @@ class FromLocalViewController: UIViewController, UICollectionViewDataSource, UIC
         // Static setup
         SKPhotoBrowserOptions.displayAction = false
         SKPhotoBrowserOptions.displayStatusbar = true
-
+        SKToolbarOptions.textColor = .black
+        
         setupTestData()
         setupCollectionView()
     }

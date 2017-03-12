@@ -17,7 +17,7 @@ open class SKPhotoBrowser: UIViewController {
     
     fileprivate var closeButton: SKCloseButton!
     fileprivate var deleteButton: SKDeleteButton!
-    fileprivate var toolbar: SKToolbar!
+    var toolbar: SKToolbar!
     
     // actions
     fileprivate var activityViewController: UIActivityViewController!
@@ -133,18 +133,30 @@ open class SKPhotoBrowser: UIViewController {
         }
     }
     
+    open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        // hack for rotation
+        self.pagingScrollView.isHidden = true
+        
+        coordinator.animate(alongsideTransition: nil, completion: {
+            _ in
+            
+            self.isPerformingLayout = true
+            self.pagingScrollView.updateFrame(self.view.bounds, currentPageIndex: self.currentPageIndex)
+            // where did start
+            self.delegate?.didShowPhotoAtIndex?(self.currentPageIndex)
+            self.pagingScrollView.isHidden = false
+            self.isPerformingLayout = false
+        })
+        
+
+    }
+    
     override open func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        isPerformingLayout = true
-        
-        pagingScrollView.updateFrame(view.bounds, currentPageIndex: currentPageIndex)
-        
-        toolbar.frame = frameForToolbarAtOrientation()
-        
-        // where did start
-        delegate?.didShowPhotoAtIndex?(currentPageIndex)
-        
-        isPerformingLayout = false
+        // here was the rotation, but it always was called this func when changes pageViewController as well (bug when label in toolbar has constraints?)
+        self.toolbar.frame = self.frameForToolbarAtOrientation()
     }
     
     override open func viewDidAppear(_ animated: Bool) {
@@ -336,45 +348,45 @@ public extension SKPhotoBrowser {
         return toolbar.alpha == 0.0
     }
     
-    func popupShare(includeCaption: Bool = true) {
-        let photo = photos[currentPageIndex]
-        guard let underlyingImage = photo.underlyingImage else {
-            return
-        }
-        
-        var activityItems: [AnyObject] = [underlyingImage]
-        if photo.caption != nil && includeCaption {
-            if let shareExtraCaption = SKPhotoBrowserOptions.shareExtraCaption {
-                let caption = photo.caption + shareExtraCaption
-                activityItems.append(caption as AnyObject)
-            } else {
-                activityItems.append(photo.caption as AnyObject)
-            }
-        }
-        
-        if let activityItemProvider = activityItemProvider {
-            activityItems.append(activityItemProvider)
-        }
-        
-        activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
-        activityViewController.completionWithItemsHandler = {
-            (activity, success, items, error) in
-            self.hideControlsAfterDelay()
-            self.activityViewController = nil
-        }
-        if UI_USER_INTERFACE_IDIOM() == .phone {
-            present(activityViewController, animated: true, completion: nil)
-        } else {
-            activityViewController.modalPresentationStyle = .popover
-            let popover: UIPopoverPresentationController! = activityViewController.popoverPresentationController
-            popover.barButtonItem = toolbar.toolActionButton
-            present(activityViewController, animated: true, completion: nil)
-        }
-    }
-    
-    func getCurrentPageIndex() -> Int {
-        return currentPageIndex
-    }
+//    func popupShare(includeCaption: Bool = true) {
+//        let photo = photos[currentPageIndex]
+//        guard let underlyingImage = photo.underlyingImage else {
+//            return
+//        }
+//        
+//        var activityItems: [AnyObject] = [underlyingImage]
+//        if photo.caption != nil && includeCaption {
+//            if let shareExtraCaption = SKPhotoBrowserOptions.shareExtraCaption {
+//                let caption = photo.caption + shareExtraCaption
+//                activityItems.append(caption as AnyObject)
+//            } else {
+//                activityItems.append(photo.caption as AnyObject)
+//            }
+//        }
+//        
+//        if let activityItemProvider = activityItemProvider {
+//            activityItems.append(activityItemProvider)
+//        }
+//        
+//        activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+//        activityViewController.completionWithItemsHandler = {
+//            (activity, success, items, error) in
+//            self.hideControlsAfterDelay()
+//            self.activityViewController = nil
+//        }
+//        if UI_USER_INTERFACE_IDIOM() == .phone {
+//            present(activityViewController, animated: true, completion: nil)
+//        } else {
+//            activityViewController.modalPresentationStyle = .popover
+//            let popover: UIPopoverPresentationController! = activityViewController.popoverPresentationController
+////            popover.barButtonItem = toolbar.toolActionButton
+//            present(activityViewController, animated: true, completion: nil)
+//        }
+//    }
+//    
+//    func getCurrentPageIndex() -> Int {
+//        return currentPageIndex
+//    }
 }
 
 
@@ -410,18 +422,18 @@ internal extension SKPhotoBrowser {
 internal extension SKPhotoBrowser {
     func frameForToolbarAtOrientation() -> CGRect {
         let currentOrientation = UIApplication.shared.statusBarOrientation
-        var height: CGFloat = 150//navigationController?.navigationBar.frame.size.height ?? 44
+        var height: CGFloat = 80//navigationController?.navigationBar.frame.size.height ?? 44
         if UIInterfaceOrientationIsLandscape(currentOrientation) {
-            height = 32
+            height = 60
         }
         return CGRect(x: 0, y: view.bounds.size.height - height, width: view.bounds.size.width, height: height)
     }
     
     func frameForToolbarHideAtOrientation() -> CGRect {
         let currentOrientation = UIApplication.shared.statusBarOrientation
-        var height: CGFloat = navigationController?.navigationBar.frame.size.height ?? 44
+        var height: CGFloat = 80//navigationController?.navigationBar.frame.size.height ?? 44
         if UIInterfaceOrientationIsLandscape(currentOrientation) {
-            height = 32
+            height = 60
         }
         return CGRect(x: 0, y: view.bounds.size.height + height, width: view.bounds.size.width, height: height)
     }
@@ -507,41 +519,45 @@ internal extension SKPhotoBrowser {
         determineAndClose()
     }
     
-    func actionButtonPressed(ignoreAndShare: Bool) {
-        delegate?.willShowActionSheet?(currentPageIndex)
-        
-        guard numberOfPhotos > 0 else {
-            return
-        }
-        
-        if let titles = SKPhotoBrowserOptions.actionButtonTitles {
-            let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            actionSheetController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
-            }))
-            for idx in titles.indices {
-                actionSheetController.addAction(UIAlertAction(title: titles[idx], style: .default, handler: { (action) -> Void in
-                    self.delegate?.didDismissActionSheetWithButtonIndex?(idx, photoIndex: self.currentPageIndex)
-                }))
-            }
-            
-            if UI_USER_INTERFACE_IDIOM() == .phone {
-                present(actionSheetController, animated: true, completion: nil)
-            } else {
-                actionSheetController.modalPresentationStyle = .popover
-                
-                if let popoverController = actionSheetController.popoverPresentationController {
-                    popoverController.sourceView = self.view
-                    popoverController.barButtonItem = toolbar.toolActionButton
-                }
-                
-                present(actionSheetController, animated: true, completion: { () -> Void in
-                })
-            }
-            
-        } else {
-            popupShare()
-        }
+    func actionButtonPressed() {
+        print("action on \(currentPageIndex)")
     }
+    
+//    func actionButtonPressed(ignoreAndShare: Bool) {
+//        delegate?.willShowActionSheet?(currentPageIndex)
+//        
+//        guard numberOfPhotos > 0 else {
+//            return
+//        }
+//        
+//        if let titles = SKPhotoBrowserOptions.actionButtonTitles {
+//            let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+//            actionSheetController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
+//            }))
+//            for idx in titles.indices {
+//                actionSheetController.addAction(UIAlertAction(title: titles[idx], style: .default, handler: { (action) -> Void in
+//                    self.delegate?.didDismissActionSheetWithButtonIndex?(idx, photoIndex: self.currentPageIndex)
+//                }))
+//            }
+//            
+//            if UI_USER_INTERFACE_IDIOM() == .phone {
+//                present(actionSheetController, animated: true, completion: nil)
+//            } else {
+//                actionSheetController.modalPresentationStyle = .popover
+//                
+//                if let popoverController = actionSheetController.popoverPresentationController {
+//                    popoverController.sourceView = self.view
+//                    popoverController.barButtonItem = toolbar.toolActionButton
+//                }
+//                
+//                present(actionSheetController, animated: true, completion: { () -> Void in
+//                })
+//            }
+//            
+//        } else {
+//            popupShare()
+//        }
+//    }
 }
 
 // MARK: - Private Function 
@@ -582,7 +598,9 @@ private extension SKPhotoBrowser {
     }
     
     func configureToolbar() {
-        toolbar = SKToolbar(frame: frameForToolbarAtOrientation(), browser: self)
+        toolbar = SKToolbar.instanceFromNib()
+        toolbar.frame = self.frameForToolbarAtOrientation()
+        toolbar.browser = self
         view.addSubview(toolbar)
     }
     
