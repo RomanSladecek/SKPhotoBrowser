@@ -6,6 +6,8 @@
 //  Copyright © 2015 suzuki_keishi. All rights reserved.
 //
 
+
+
 import UIKit
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
@@ -36,6 +38,17 @@ open class SKCaptionView: UIView {
     
     class func instanceFromNib() -> SKCaptionView {
         return UINib(nibName: "SKCaptionView", bundle: bundle).instantiate(withOwner: nil, options: nil)[0] as! SKCaptionView
+    }
+    
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.setupUI()
+    }
+    
+    func setupUI() {
+//        SKLocalPhoto(url: <#T##String#>)
+//        self.photoMapButton.af
     }
     
 }
