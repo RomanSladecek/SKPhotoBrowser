@@ -13,6 +13,7 @@ open class SKLocalPhoto: NSObject, SKPhotoProtocol {
     
     open var underlyingImage: UIImage!
     open var photoURL: String!
+    open var mapURL: String!
     open var contentMode: UIViewContentMode = .scaleToFill
     open var shouldCachePhotoURLImage: Bool = false
     open var caption: String!

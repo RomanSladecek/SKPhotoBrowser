@@ -11,6 +11,7 @@ import UIKit
 @objc public protocol SKPhotoProtocol: NSObjectProtocol {
     var underlyingImage: UIImage! { get }
     var caption: String! { get }
+    var mapURL: String! { get }
     var index: Int { get set}
     var contentMode: UIViewContentMode { get set }
     func loadUnderlyingImageAndNotify()
@@ -22,6 +23,7 @@ open class SKPhoto: NSObject, SKPhotoProtocol {
     
     open var underlyingImage: UIImage!
     open var photoURL: String!
+    open var mapURL: String!
     open var contentMode: UIViewContentMode = .scaleAspectFill
     open var shouldCachePhotoURLImage: Bool = false
     open var caption: String!
