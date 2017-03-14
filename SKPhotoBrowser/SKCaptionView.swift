@@ -9,6 +9,7 @@
 
 
 import UIKit
+
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -47,8 +48,24 @@ open class SKCaptionView: UIView {
     }
     
     func setupUI() {
-//        SKLocalPhoto(url: <#T##String#>)
-//        self.photoMapButton.af
+        if let mapURL = photo?.mapURL {
+            let url = URL(string: mapURL)
+            if let img = SKCache.sharedCache.imageForKey(mapURL) {
+                self.photoMapButton.setImage(img, for: .normal)
+            }
+            else {
+                let data = try? Data(contentsOf: url!)
+                let img = UIImage(data: data!)
+                SKCache.sharedCache.setImage(img!, forKey: mapURL)
+                self.photoMapButton.setImage(img, for: .normal)
+            }
+            
+//            DispatchQueue.global().async {
+//                DispatchQueue.main.async {
+//
+//                }
+//            }
+        }
     }
     
 }
