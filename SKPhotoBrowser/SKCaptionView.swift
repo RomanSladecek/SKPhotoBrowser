@@ -59,7 +59,7 @@ open class SKCaptionView: UIView {
                 SKCache.sharedCache.setImage(img!, forKey: mapURL)
                 self.photoMapButton.setImage(img, for: .normal)
             }
-            self.isHidden = true
+            self.isHidden = false
 
 //            DispatchQueue.global().async {
 //                DispatchQueue.main.async {
@@ -68,7 +68,7 @@ open class SKCaptionView: UIView {
 //            }
         }
         else {
-            self.isHidden = false
+            self.isHidden = true
         }
     }
     
