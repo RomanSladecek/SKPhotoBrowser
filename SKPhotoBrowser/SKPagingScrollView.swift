@@ -150,11 +150,16 @@ class SKPagingScrollView: UIScrollView {
             if let captionView: SKCaptionView = createCaptionView(index) {
                 captionView.frame = frameForCaptionView(captionView, index: index)
                 captionView.alpha = browser.areControlsHidden() ? 0 : 1
+                captionView.pagingScrollView = self
                 addSubview(captionView)
                 // ref val for control
                 page.captionView = captionView
             }
         }
+    }
+    
+    func didPressedMapButton(_ index: Int) {
+        self.browser?.delegate?.didPressedMapButtonOnIndex!(index)
     }
     
     func frameForCaptionView(_ captionView: SKCaptionView, index: Int) -> CGRect {
@@ -208,6 +213,7 @@ private extension SKPagingScrollView {
         }
         let captionView = SKCaptionView.instanceFromNib()
         captionView.photo = photo
+        captionView.index = index
         return captionView
     }
     

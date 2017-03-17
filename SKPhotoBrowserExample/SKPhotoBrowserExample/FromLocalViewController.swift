@@ -37,6 +37,9 @@ class FromLocalViewController: UIViewController, UICollectionViewDataSource, UIC
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
+    
+    
 }
 
 
@@ -117,6 +120,10 @@ extension FromLocalViewController {
     
     func viewForPhoto(_ browser: SKPhotoBrowser, index: Int) -> UIView? {
         return collectionView.cellForItem(at: IndexPath(item: index, section: 0))
+    }
+    
+    func didPressedMapButtonOnIndex(_ index: Int) {
+        print("Pressed on index: \(index)")
     }
 }
 

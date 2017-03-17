@@ -36,6 +36,8 @@ private let bundle = Bundle(for: SKCaptionView.self)
 open class SKCaptionView: UIView {
     var photo: SKPhotoProtocol?
     @IBOutlet weak var photoMapButton: UIButton!
+    var pagingScrollView: SKPagingScrollView?
+    var index: Int!
     
     class func instanceFromNib() -> SKCaptionView {
         return UINib(nibName: "SKCaptionView", bundle: bundle).instantiate(withOwner: nil, options: nil)[0] as! SKCaptionView
@@ -72,6 +74,9 @@ open class SKCaptionView: UIView {
         }
     }
     
+    @IBAction func btnMapPressed(_ sender: UIButton) {
+        self.pagingScrollView?.didPressedMapButton(self.index)
+    }
 }
 
 

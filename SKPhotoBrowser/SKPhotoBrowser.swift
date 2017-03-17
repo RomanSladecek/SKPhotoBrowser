@@ -522,6 +522,10 @@ internal extension SKPhotoBrowser {
     func actionButtonPressed() {
         print("action on \(currentPageIndex)")
     }
+
+    func mapButtonPressed() {
+        delegate?.didPressedMapButtonOnIndex?(currentPageIndex)
+    }
     
 //    func actionButtonPressed(ignoreAndShare: Bool) {
 //        delegate?.willShowActionSheet?(currentPageIndex)

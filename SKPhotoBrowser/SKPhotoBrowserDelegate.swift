@@ -76,5 +76,10 @@ import Foundation
      Tells the delegate that the controls view toggled visibility
      */
     @objc optional func controlsVisibilityToggled(hidden: Bool) -> Void
+    
+    /**
+     Tells the delegate that map button has been pressed
+     */
+    @objc optional func didPressedMapButtonOnIndex(_ index: Int)
 }
 
