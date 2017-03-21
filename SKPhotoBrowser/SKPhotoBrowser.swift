@@ -201,6 +201,10 @@ open class SKPhotoBrowser: UIViewController {
         view.setNeedsLayout()
     }
     
+    open func setupNewPhotos(_ photos: [SKPhotoProtocol]) {
+        self.photos = photos
+    }
+    
     open func performLayout() {
         isPerformingLayout = true
         
