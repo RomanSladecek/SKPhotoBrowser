@@ -40,6 +40,7 @@ class SKPagingScrollView: UIScrollView {
     }
     
     func reload() {
+        self.subviews.forEach({$0.removeFromSuperview()})
         visiblePages.forEach({$0.removeFromSuperview()})
         visiblePages.removeAll()
         recycledPages.removeAll()
