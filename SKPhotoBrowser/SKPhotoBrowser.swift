@@ -296,7 +296,7 @@ public extension SKPhotoBrowser {
     func jumpToPageAtIndex(_ index: Int) {
         if index < numberOfPhotos {
             if !isEndAnimationByToolBar {
-                return
+                //return
             }
             isEndAnimationByToolBar = false
             toolbar.updateToolbar(currentPageIndex)
