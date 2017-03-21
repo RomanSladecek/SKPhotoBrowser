@@ -81,5 +81,10 @@ import Foundation
      Tells the delegate that map button has been pressed
      */
     @objc optional func didPressedMapButtonOnIndex(_ index: Int)
+    
+    /**
+    Tells the delegate that action button has been pressed
+    */
+    @objc optional func didPressedActionButtonOnIndex(_ index: Int)
 }
 
