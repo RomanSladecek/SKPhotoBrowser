@@ -148,14 +148,14 @@ class SKPagingScrollView: UIScrollView {
             addSubview(page)
             
             // if exists caption, insert
-            if let captionView: SKCaptionView = createCaptionView(index) {
-                captionView.frame = frameForCaptionView(captionView, index: index)
-                captionView.alpha = browser.areControlsHidden() ? 0 : 1
-                captionView.pagingScrollView = self
-                addSubview(captionView)
-                // ref val for control
-                page.captionView = captionView
-            }
+//            if let captionView: SKCaptionView = createCaptionView(index) {
+//                captionView.frame = frameForCaptionView(captionView, index: index)
+//                captionView.alpha = browser.areControlsHidden() ? 0 : 1
+//                captionView.pagingScrollView = self
+//                addSubview(captionView)
+//                // ref val for control
+//                page.captionView = captionView
+//            }
         }
     }
     
@@ -167,8 +167,10 @@ class SKPagingScrollView: UIScrollView {
         let pageFrame = frameForPageAtIndex(index)
 //        let captionSize = captionView.sizeThatFits(CGSize(width: pageFrame.size.width, height: 0))
 //        let navHeight = browser?.navigationController?.navigationBar.frame.size.height ?? 44
-        return CGRect(x: pageFrame.origin.x + pageFrame.size.width - 120, y: pageFrame.origin.y + pageFrame.size.height - (self.browser?.toolbar.frame.size.height)! - 120,//pageFrame.size.height - captionSize.height - navHeight,
-                      width: 120, height: 120)
+//        return CGRect(x: pageFrame.origin.x + pageFrame.size.width - 120, y: pageFrame.origin.y + pageFrame.size.height - (self.browser?.toolbar.frame.size.height)! - 120,//pageFrame.size.height - captionSize.height - navHeight,
+//                      width: 120, height: 120)
+        return CGRect(x: pageFrame.origin.x + 32, y: pageFrame.origin.y + pageFrame.size.height - (self.browser?.toolbar.frame.size.height)! - 60,//pageFrame.size.height - captionSize.height - navHeight,
+            width: 120, height: 120)
     }
     
     func pageDisplayedAtIndex(_ index: Int) -> SKZoomingScrollView? {
