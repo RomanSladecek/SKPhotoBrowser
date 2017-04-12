@@ -29,6 +29,9 @@ class SKToolbar: UIView {
         let photo = browser.photoAtIndex(currentPageIndex)
         self.lblStatus.text = "\(photo.caption!)"
         
+        self.btnMap.layer.cornerRadius = self.btnMap.frame.size.width / 2
+        self.btnMap.clipsToBounds = true
+        
         // map
         if let mapURL = photo.mapURL {
             let url = URL(string: mapURL)
