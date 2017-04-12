@@ -47,6 +47,9 @@
                                 <constraint firstAttribute="height" constant="70" id="pt2-PQ-pfs"/>
                                 <constraint firstAttribute="width" constant="70" id="sz8-On-rSo"/>
                             </constraints>
+                            <connections>
+                                <action selector="btnMapPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="YZV-bf-qua"/>
+                            </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="22/03" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jks-lv-kFu">
                             <rect key="frame" x="24.5" y="73" width="55" height="23"/>

@@ -57,4 +57,8 @@ class SKToolbar: UIView {
     @IBAction func btnMoreActionsPressed(_ sender: UIButton) {
         self.browser?.actionButtonPressed()
     }
+    
+    @IBAction func btnMapPressed(_ sender: UIButton) {
+        self.browser?.mapButtonPressed()
+    }
 }
