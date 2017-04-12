@@ -31,7 +31,6 @@
 		8CA6C6521CBE76E80054D3C2 /* SKLocalPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CA6C6511CBE76E80054D3C2 /* SKLocalPhoto.swift */; };
 		A64B89361CB04222000071B9 /* SKPhotoBrowserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64B89351CB04222000071B9 /* SKPhotoBrowserTests.swift */; };
 		A64B89381CB04222000071B9 /* SKPhotoBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8909B5301BC791280060A053 /* SKPhotoBrowser.framework */; };
-		FF649A5C1E9E1C46000D76FD /* moreOptionsButton.png in Resources */ = {isa = PBXBuildFile; fileRef = FF649A5B1E9E1C46000D76FD /* moreOptionsButton.png */; };
 		FF807B941E75AE7F00BD9BDB /* SKToolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF807B931E75AE7E00BD9BDB /* SKToolbar.xib */; };
 		FF807B961E75D11D00BD9BDB /* SKCaptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF807B951E75D11D00BD9BDB /* SKCaptionView.xib */; };
 /* End PBXBuildFile section */
@@ -74,7 +73,6 @@
 		A64B89331CB04222000071B9 /* SKPhotoBrowserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SKPhotoBrowserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A64B89351CB04222000071B9 /* SKPhotoBrowserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKPhotoBrowserTests.swift; sourceTree = "<group>"; };
 		A64B89371CB04222000071B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FF649A5B1E9E1C46000D76FD /* moreOptionsButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = moreOptionsButton.png; path = SKPhotoBrowser.bundle/images/moreOptionsButton.png; sourceTree = "<group>"; };
 		FF807B931E75AE7E00BD9BDB /* SKToolbar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SKToolbar.xib; sourceTree = "<group>"; };
 		FF807B951E75D11D00BD9BDB /* SKCaptionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SKCaptionView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -128,7 +126,6 @@
 		8909B5321BC791280060A053 /* SKPhotoBrowser */ = {
 			isa = PBXGroup;
 			children = (
-				FF649A5B1E9E1C46000D76FD /* moreOptionsButton.png */,
 				89D0BA461D5994A8002A811B /* SKAnimator.swift */,
 				8917B1B31D5A14B0000CE1C4 /* SKButtons.swift */,
 				26C97AD41D0EB6870039F6CB /* SKCache.swift */,
@@ -263,7 +260,6 @@
 				8909B54D1BC7916E0060A053 /* SKPhotoBrowser.bundle in Resources */,
 				FF807B941E75AE7F00BD9BDB /* SKToolbar.xib in Resources */,
 				FF807B961E75D11D00BD9BDB /* SKCaptionView.xib in Resources */,
-				FF649A5C1E9E1C46000D76FD /* moreOptionsButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
