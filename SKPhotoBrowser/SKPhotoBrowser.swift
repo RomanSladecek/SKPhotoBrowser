@@ -166,10 +166,36 @@ open class SKPhotoBrowser: UIViewController {
     }
     
     override open var prefersStatusBarHidden: Bool {
-        get {
-            return !SKPhotoBrowserOptions.displayStatusbar
+        return self._isStatusBarHidden
+
+        //        get {
+//            return !SKPhotoBrowserOptions.displayStatusbar
+//        }
+    }
+    
+    override open var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+//    override open var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+//        get {
+//            return .slide
+//        }
+//    }
+    
+    var _isStatusBarHidden: Bool = false
+    var isStatusBarHidden: Bool {
+        get{
+            return _isStatusBarHidden
+        }
+        set {
+            if _isStatusBarHidden != newValue {
+                _isStatusBarHidden = newValue
+                self.setNeedsStatusBarAppearanceUpdate()
+            }
         }
     }
+    
     
     // MARK: - Notification
     open func handleSKPhotoLoadingDidEndNotification(_ notification: Notification) {
@@ -471,6 +497,7 @@ internal extension SKPhotoBrowser {
             firstY = zoomingScrollView.center.y
             
             hideControls()
+            self.isStatusBarHidden = false
             setNeedsStatusBarAppearanceUpdate()
         }
         
@@ -495,6 +522,9 @@ internal extension SKPhotoBrowser {
                 
             } else {
                 // Continue Showing View
+                self.toggleControls()
+//                self.showButtons()
+                self.isStatusBarHidden = true
                 setNeedsStatusBarAppearanceUpdate()
                 
                 let velocityY: CGFloat = CGFloat(0.35) * sender.velocity(in: self.view).y
@@ -589,20 +619,23 @@ private extension SKPhotoBrowser {
         if !SKPhotoBrowserOptions.disableVerticalSwipe {
             view.addGestureRecognizer(panGesture)
         }
+        
+        self.isStatusBarHidden = true
+
     }
     
     func configureCloseButton() {
         closeButton = SKCloseButton(frame: .zero)
         closeButton.addTarget(self, action: #selector(closeButtonPressed(_:)), for: .touchUpInside)
         closeButton.isHidden = !SKPhotoBrowserOptions.displayCloseButton
-        view.addSubview(closeButton)
+//        view.addSubview(closeButton)
     }
     
     func configureDeleteButton() {
         deleteButton = SKDeleteButton(frame: .zero)
         deleteButton.addTarget(self, action: #selector(deleteButtonPressed(_:)), for: .touchUpInside)
         deleteButton.isHidden = !SKPhotoBrowserOptions.displayDeleteButton
-        view.addSubview(deleteButton)
+//        view.addSubview(deleteButton)
     }
     
     func configureToolbar() {
@@ -638,8 +671,13 @@ private extension SKPhotoBrowser {
         if !permanent {
             hideControlsAfterDelay()
         }
+    
+        self.isStatusBarHidden = true
+
         setNeedsStatusBarAppearanceUpdate()
     }
+    
+
     
     func deleteImage() {
         defer {
